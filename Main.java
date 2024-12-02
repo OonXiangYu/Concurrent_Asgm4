@@ -1,8 +1,11 @@
 import java.util.OptionalDouble;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
+import java.util.Arrays;
 import java.util.Comparator;
 import java.util.List;
+import java.util.function.Function;
+import java.util.function.Predicate;
 
 public class Main {
 
@@ -25,6 +28,8 @@ public class Main {
         }; 
 
     public static void main(String[] args){
+
+        System.out.println("Question 1\n");
 
         // Number of student
         long numberOfStudents = Stream.of(scoreData).count();
@@ -51,5 +56,38 @@ public class Main {
 
         // Students order by scores
         Stream.of(scoreData).sorted(Comparator.comparing(student -> student.score)).forEach( student -> System.out.println(student.firstName + " " + student.lastName + " : " + student.score));
+
+        System.out.println("\nQuestion 2\n");
+
+        MyList<Integer> data = new MyArrayList<>();
+        
+         // Test add(E x)
+         data.add(1);
+         data.add(2);
+         data.add(3);
+
+        // Test add(List<E> lst)
+        data.add(Arrays.asList(4, 5, 6));
+
+        // Test forAll(Predicate<E> pr) and exists(Predicate<E> pr)
+        Predicate<Integer> var1 = x -> x > 0;
+        Predicate<Integer> var2 = x -> x > 3;
+        System.out.println("All elements is positive: " + data.forAll(var1));
+        System.out.println("Exists an element > 3: " + data.exists(var2));
+
+        //Test count(Predicate<E> pr)
+        System.out.println("Amount of elements thats are positive : " + data.count(var1));
+
+        // Test map(Function<E, E> fn)
+        Function<Integer, Integer> square = x -> x * x;
+        List<Integer> squaredList = data.map(square);
+        System.out.println("Squared List: " + squaredList);
+
+        // Test filter(Predicate<E> pr)
+        System.out.println("All elements is positive: " + data.filter(var1));
+
+        // Test mapFilter(Function<E, E> fn, Predicate<E> pr)
+        System.out.println("The elements which > 3 then get the squared of it : " + data.mapFilter(square, var2));
+
     }
 }
